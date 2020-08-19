@@ -33,7 +33,7 @@
         <el-button type="default" @click="resetData()">清空</el-button>
     </el-form-item>
     </el-form>
-
+    <!--结果展示-->
       <el-table
       :data="resultList"
       element-loading-text="数据加载中"
@@ -76,16 +76,23 @@
       </el-table-column>
 
       <el-table-column
+        prop="gmtModified"
+        label="修改时间"
+        width="160">
+      </el-table-column>
+
+      <el-table-column
         prop="sort"
         label="排序"
         width="60">
       </el-table-column>
 
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column label="操作" width="210" align="center">
         <template slot-scope="scope">
-          <router-link :to="'/edu/teacher/edit/'+scope.row.id">
+          <router-link :to="'/teacher/edit/'+scope.row.id">
             <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>
           </router-link>
+          &#8194;&#8194;&#8194;
           <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -112,7 +119,7 @@ export default {
     data(){ //定义变量和初始值
         return{
             page:1, //当前页
-            limit:10, //每页书
+            limit:5, //每页数
             total:0, //总记录行数
             teacherQuery:{}, //条件对象
             resultList:null //查询后返回的结果集
@@ -133,15 +140,36 @@ export default {
                     //console.log(response);
                     this.resultList = response.data.rows;
                     this.total = response.data.total;
-                    console.log(this.resultList);
-                    console.log(this.total);
+                    // console.log(this.resultList);
+                    // console.log(this.total);
                 })
                 .catch(error =>{console.log(error)});//请求失败
         },
         resetData() {
             this.teacherQuery = {}
             this.getList()
-  }
+        },
+        //删除
+        removeDataById(id){
+            this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+            }).then(() => { //点击确定，执行then方法
+                //确定，调用删除方法
+                teacher.deleteTeacherById(id)
+                    .then(response =>{ //删除成功
+                        //提示信息
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                  //刷新列表
+                  this.getList();
+                })
+            })       
+        }
+
     }
 
 }
