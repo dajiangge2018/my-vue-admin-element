@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <el-form label-width="120px">
+
       <el-form-item label="人物名">
         <el-input v-model="teacher.name"/>
       </el-form-item>
@@ -8,6 +9,7 @@
          <el-input-number v-model="teacher.sort" controls-position="right" @change="handleChange" :min="0" :max="10"></el-input-number>
       </el-form-item>
       <el-form-item label="头衔">
+
         <el-select v-model="teacher.level" clearable placeholder="请选择">
           <!--
             数据类型一定要和取出的json中的一致，否则没法回填
@@ -51,6 +53,9 @@
                         @close="close"
                         @crop-upload-success="cropSuccess"/>
       </el-form-item>
+
+      <!-- 讲师头像：TODO -->
+
       <el-form-item>
         <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">保存</el-button>
       </el-form-item>
@@ -64,6 +69,7 @@ import ImageCropper from '@/components/ImageCropper'
 import PanThumb from '@/components/PanThumb'
 export default {
   components: { ImageCropper, PanThumb },
+
     data() {
         return {
         teacher: {
@@ -78,6 +84,7 @@ export default {
         imagecropperShow:false,
         imagecropperKey:0,//上传组件key值
         VUE_APP_BASE_API:process.env.VUE_APP_BASE_API, //获取dev.env.js里面地址
+
         saveBtnDisabled: false // 保存按钮是否禁用,
         }
     },
@@ -120,6 +127,7 @@ export default {
                     this.teacher = response.data.teacher;
                 });
         },
+
         handleChange(value){
           this.teacher.sort=value;
           //console.log(value);

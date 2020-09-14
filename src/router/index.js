@@ -80,26 +80,26 @@ export const constantRoutes = [
     path: '/teacher',
     component: Layout,
     redirect: '/teacger/table',
-    name: '人物管理',
-    meta: { title: '人物信息管理', icon: 'el-icon-s-help' },
+    name: '讲师管理',
+    meta: { title: '讲师管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'table',
-        name: '人物列表',
+        name: '讲师列表',
         component: () => import('@/views/teacher/list'),
-        meta: { title: '人物列表', icon: 'table' }
+        meta: { title: '讲师列表', icon: 'table' }
       },
       {
         path: 'save',
-        name: '添加人物',
+        name: '添加讲师',
         component: () => import('@/views/teacher/save'),
-        meta: { title: '添加人物', icon: 'tree' }
+        meta: { title: '添加讲师', icon: 'tree' }
       },
       {
         path: 'edit/:id',
         name: 'EduTeacherEdit',
         component: () => import('@/views/teacher/save'),
-        meta: { title: '编辑人物', noCache:true },
+        meta: { title: '编辑讲师', noCache:true },
         hidden:true
       }
     ]
